@@ -527,9 +527,22 @@ p {
   text-decoration: none;
   flex: none;
 }
-.brand img {
-  height: clamp(52px, 4.8vw, 66px);
-  width: auto;
+/* The mark always rides on a white disc, so the navy artwork keeps its contrast
+   whichever band the lockup sits on. */
+.brand__disc {
+  --disc-size: 52px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--disc-size);
+  height: var(--disc-size);
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(30, 48, 82, 0.1);
+}
+.brand__disc img {
+  width: 92%;
+  height: auto;
 }
 .brand__text {
   display: none;
@@ -566,6 +579,51 @@ p {
 }
 .brand--light .brand__sub {
   color: var(--navy-300);
+}
+
+/* Header medallion.
+   At the top of the page the disc is full size and hangs below the bar, sitting
+   on the hero. Once the page moves, it shrinks into the sticky menu and the
+   text lockup fades in beside it — the full-size disc already carries the
+   wordmark, so only one of the two is ever doing that job.
+   The disc's layout footprint is always the small size and only transform and
+   opacity animate, so the nav row never reflows and the header keeps one fixed
+   height: shrinking the mark cannot jolt the page below the sticky bar. */
+.site-header .brand__disc {
+  --disc-size: 46px;
+  --disc-scale: 2;
+  --disc-drop: 15px;
+  transform-origin: left center;
+  transform: translateY(var(--disc-drop)) scale(var(--disc-scale));
+  box-shadow: 0 0 0 1px rgba(30, 48, 82, 0.08), 0 16px 30px -14px rgba(16, 28, 51, 0.6);
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease);
+}
+.site-header.is-shrunk .brand__disc {
+  transform: none;
+  box-shadow: 0 0 0 1px rgba(30, 48, 82, 0.1);
+}
+.site-header .brand__text {
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.28s var(--ease), transform 0.45s var(--ease-out);
+}
+.site-header.is-shrunk .brand__text {
+  opacity: 1;
+  transform: none;
+}
+@media (min-width: 40rem) {
+  .site-header .brand__disc {
+    --disc-size: 50px;
+    --disc-scale: 2.2;
+    --disc-drop: 20px;
+  }
+}
+@media (min-width: 68rem) {
+  .site-header .brand__disc {
+    --disc-size: 54px;
+    --disc-scale: 2.35;
+    --disc-drop: 24px;
+  }
 }
 
 .nav__links {
@@ -1574,8 +1632,8 @@ a.tile:hover .tile__more {
     grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
   }
 }
-.footer__brand .brand img {
-  height: 84px;
+.footer__brand .brand__disc {
+  --disc-size: 96px;
 }
 .footer__brand p {
   margin-top: 1.25rem;
