@@ -5,39 +5,60 @@
 
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  var header = document.querySelector(".site-header");
+
+  /* The logo medallion starts full size and overhangs the bar; it has to be
+     tucked away while the drawer is open, or it would sit on the first link.
+     Scroll and drawer both feed the one class the CSS reads. */
+  var scrolledPast = false;
+  var drawerOpen = false;
+
+  var syncHeader = function () {
+    if (header) header.classList.toggle("is-shrunk", scrolledPast || drawerOpen);
+  };
+
   /* ---------------------------------------------------------------- Nav */
   var toggle = document.querySelector("[data-nav-toggle]");
   var drawer = document.getElementById("mobile-drawer");
 
   if (toggle && drawer) {
+    var setDrawer = function (open) {
+      drawerOpen = open;
+      toggle.setAttribute("aria-expanded", String(open));
+      drawer.classList.toggle("is-open", open);
+      syncHeader();
+    };
+
     toggle.addEventListener("click", function () {
-      var open = toggle.getAttribute("aria-expanded") === "true";
-      toggle.setAttribute("aria-expanded", String(!open));
-      drawer.classList.toggle("is-open", !open);
+      setDrawer(toggle.getAttribute("aria-expanded") !== "true");
     });
 
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && drawer.classList.contains("is-open")) {
-        drawer.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
+        setDrawer(false);
         toggle.focus();
       }
     });
 
     // Close the drawer if the viewport grows into desktop layout.
     window.matchMedia("(min-width: 68rem)").addEventListener("change", function (e) {
-      if (e.matches) {
-        drawer.classList.remove("is-open");
-        toggle.setAttribute("aria-expanded", "false");
-      }
+      if (e.matches) setDrawer(false);
     });
   }
 
   /* ------------------------------------------------------- Sticky header */
-  var header = document.querySelector(".site-header");
   if (header) {
+    // Two thresholds, not one: the medallion only springs back to full size
+    // near the very top, so scrolling around the trigger point cannot flap it.
+    var SHRINK_AT = 56;
+    var EXPAND_AT = 16;
+
     var onScroll = function () {
-      header.classList.toggle("is-stuck", window.scrollY > 12);
+      var y = window.scrollY;
+      header.classList.toggle("is-stuck", y > 12);
+      if (y > SHRINK_AT) scrolledPast = true;
+      else if (y < EXPAND_AT) scrolledPast = false;
+      syncHeader();
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });

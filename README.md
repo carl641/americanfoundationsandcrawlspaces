@@ -118,7 +118,9 @@ accessibility and search.
     │   └── fonts.css         # @font-face for the self-hosted fonts
     ├── fonts/                # Anton + IBM Plex Sans/Mono, latin subset, ~196 KB total
     ├── img/
-    │   ├── logo-mark.svg     # see "Logo" below
+    │   ├── amerfclogo.png    # the brand logo — see "Logo" below
+    │   ├── amfclogo.png      # same artwork at 8659 px, kept as the master, unused by the site
+    │   ├── logo-mark.svg     # earlier placeholder badge, no longer referenced
     │   └── favicon.svg
     └── js/
         └── main.js           # nav, scroll reveals, accordion, form validation
@@ -157,23 +159,42 @@ about 196 KB combined.
 
 ### Logo
 
-`assets/img/logo-mark.svg` is a **reconstruction** of the badge from the brand
-logo — the circular navy/red rings, the house with the star field and stripes on
-the roof, the stem wall and piers below grade. It was rebuilt as vector because
-the original artwork was not available in the repo. The wordmark next to it is
-live HTML text set in Anton, not part of the SVG, so it stays crisp at any size.
+`assets/img/amerfclogo.png` (850 × 850, transparent) is the brand logo, used in
+the header and footer of every page. It always sits on a white circular disc,
+`.brand__disc`, so the navy artwork keeps its contrast on the white header bar
+and on the navy footer alike.
 
-**If you have the original vector artwork, use it instead.** Either overwrite
-`assets/img/logo-mark.svg`, or add your file and update the `src` in the header
-and footer of each page:
+`assets/img/amfclogo.png` is the same artwork at 8659 px — kept as the master,
+but far too heavy to serve. `assets/img/logo-mark.svg` is the vector badge that
+stood in before the real artwork arrived; nothing references it any more and it
+can be deleted.
+
+**In the header the disc animates with the scroll.** At the top of the page it
+is full size — about 127 px on desktop — and hangs below the bar onto the hero.
+Once the page scrolls past 56 px, `main.js` adds `is-shrunk` to `.site-header`:
+the disc shrinks to 54 px inside the sticky menu and the `.brand__text` lockup
+fades in beside it, since the full-size disc already carries the wordmark and
+only one of the two should be reading it out. It springs back to full size only
+above 16 px of scroll — two thresholds, so scrolling around the trigger point
+cannot flap it — and it tucks away whenever the mobile drawer is open, where it
+would otherwise sit on the first link.
+
+Only `transform` and `opacity` animate. The disc's layout footprint is always
+the small size, so the nav row never reflows and the header keeps one fixed
+height: shrinking the mark cannot jolt the page below the sticky bar. The three
+sizes live in custom properties on `.site-header .brand__disc` — `--disc-size`,
+`--disc-scale`, `--disc-drop` — retuned at the 40 rem and 68 rem breakpoints.
+
+**To swap the artwork**, drop a roughly square file with a transparent
+background into `assets/img/` and update the `src` in the header and footer of
+each page:
 
 ```bash
-grep -rn "logo-mark.svg" --include="*.html" .
+grep -rn "amerfclogo.png" --include="*.html" .
 ```
 
-The header lockup expects a roughly square badge. If your file is the full
-horizontal lockup including the wordmark, also remove the adjacent
-`<span class="brand__text">…</span>` block so the name is not set twice.
+The PNG is ~170 KB. Quantizing it to a 224-colour palette takes it under 40 KB
+with no visible difference, if you want the header lighter still.
 
 ## Accessibility & SEO
 
