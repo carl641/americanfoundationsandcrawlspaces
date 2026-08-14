@@ -1,7 +1,8 @@
 # American Foundations & Crawlspaces
 
 Marketing site for American Foundations & Crawlspaces — foundation repair,
-crawlspace and concrete services in Pensacola and the western Florida Panhandle.
+crawlspace and concrete services in Pensacola, the western Florida Panhandle and
+Baldwin County, Alabama.
 
 Static HTML, CSS and vanilla JavaScript. **No build step, no dependencies, no
 npm install.** Open `index.html` in a browser, or drop the whole folder on any
@@ -63,6 +64,12 @@ These were intentionally left out rather than invented, because they are claims
 only the business can make truthfully:
 
 - **License numbers** (FL CGC/CBC, plus any others) — add to the footer
+- **Alabama licensure** — the site now advertises work in Baldwin County, AL.
+  Alabama licenses separately from Florida: the Alabama Licensing Board for
+  General Contractors covers commercial and larger jobs, and the Home Builders
+  Licensure Board covers residential. Confirm the company holds what the Baldwin
+  County work requires before the site goes live, and add those numbers to the
+  footer alongside the Florida ones
 - **Insurance and bonding statements**
 - **Warranty terms** — the copy references a written warranty in several places;
   confirm the actual terms and transferability
@@ -103,7 +110,7 @@ accessibility and search.
 | `crawlspace-drainage.html` | Interior drains, sump systems, grading |
 | `crawlspace-stabilization.html` | Adjustable steel floor supports, framing repair |
 | `concrete-lifting.html` | Polyurethane injection for driveways, patios, pool decks |
-| `service-areas.html` | Escambia, Santa Rosa and Okaloosa county coverage |
+| `service-areas.html` | Escambia, Santa Rosa and Okaloosa (FL) plus Baldwin County (AL) coverage |
 | `contact.html` | Free inspection request form |
 
 ## Structure
