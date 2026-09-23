@@ -1102,6 +1102,20 @@ a.tile:hover .tile__more {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+/* Five cards: the odd one spans both columns on tablets, one row of five on desktop */
+@media (min-width: 40rem) {
+  .signs--5 .sign:last-child {
+    grid-column: span 2;
+  }
+}
+@media (min-width: 62rem) {
+  .signs--5 {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .signs--5 .sign:last-child {
+    grid-column: auto;
+  }
+}
 .sign {
   border-right: 1px solid var(--gray-200);
   border-bottom: 1px solid var(--gray-200);
