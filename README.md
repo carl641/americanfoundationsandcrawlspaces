@@ -1,8 +1,7 @@
 # American Foundations & Crawlspaces
 
 Marketing site for American Foundations & Crawlspaces — foundation repair,
-crawlspace and concrete services in Pensacola, the western Florida Panhandle and
-Baldwin County, Alabama.
+crawlspace and concrete services in Mobile and Baldwin counties, Alabama.
 
 Static HTML, CSS and vanilla JavaScript. **No build step, no dependencies, no
 npm install.** Open `index.html` in a browser, or drop the whole folder on any
@@ -25,11 +24,12 @@ also marked with an HTML comment at each occurrence.
 
 | What | Placeholder currently in the files | Where |
 |---|---|---|
-| **Phone number** | `(850) 555-0123` and `tel:+18505550123` | Every page: top bar, hero buttons, CTA bands, footer, mobile call bar, JSON-LD |
+| **Phone number** | `(850) 555-0123` and `tel:+18505550123` | Every page: top bar, hero buttons, CTA bands, footer, mobile call bar, JSON-LD. Mobile and Baldwin numbers use the 251 area code |
 | **Email address** | `info@americanfoundationsandcrawlspaces.com` | Footer on every page, contact page, JSON-LD |
 | **Office hours** | Mon–Fri 8:00am–5:00pm, Sat/Sun closed | `contact.html` |
 | **Form handler** | `<form>` has no `action` | `contact.html` |
 | **Domain** | `www.americanfoundationsandcrawlspaces.com` | `<link rel="canonical">`, `og:url`, `sitemap.xml`, `robots.txt`, JSON-LD |
+| **Business address** | None — the old Pensacola address was removed | Add the real street address as a `PostalAddress` (plus `geo`) to the business JSON-LD in `index.html`, and to `provider` on each service page |
 
 `(850) 555-0123` is deliberately in the 555-01XX range reserved for fictional
 use, so it cannot ring a real person by accident. Replace it everywhere:
@@ -39,7 +39,7 @@ use, so it cannot ring a real person by accident. Replace it everywhere:
 grep -rn "5550123\|555-0123" --include="*.html" .
 
 grep -rl "5550123\|555-0123" --include="*.html" . \
-  | xargs sed -i 's/(850) 555-0123/(850) XXX-XXXX/g; s/+18505550123/+1850XXXXXXX/g; s/+1-850-555-0123/+1-850-XXX-XXXX/g'
+  | xargs sed -i 's/(850) 555-0123/(251) XXX-XXXX/g; s/+18505550123/+1251XXXXXXX/g; s/+1-850-555-0123/+1-251-XXX-XXXX/g'
 ```
 
 ### Connecting the contact form
@@ -63,13 +63,12 @@ Anything that accepts a normal POST works: Formspree, Netlify Forms
 These were intentionally left out rather than invented, because they are claims
 only the business can make truthfully:
 
-- **License numbers** (FL CGC/CBC, plus any others) — add to the footer
-- **Alabama licensure** — the site now advertises work in Baldwin County, AL.
-  Alabama licenses separately from Florida: the Alabama Licensing Board for
-  General Contractors covers commercial and larger jobs, and the Home Builders
-  Licensure Board covers residential. Confirm the company holds what the Baldwin
-  County work requires before the site goes live, and add those numbers to the
-  footer alongside the Florida ones
+- **License numbers** — add to the footer
+- **Alabama licensure** — the site advertises work in Mobile and Baldwin
+  counties, AL. The Alabama Licensing Board for General Contractors covers
+  commercial and larger jobs, and the Home Builders Licensure Board covers
+  residential. Confirm the company holds what that work requires before the site
+  goes live, and add those numbers to the footer
 - **Insurance and bonding statements**
 - **Warranty terms** — the copy references a written warranty in several places;
   confirm the actual terms and transferability
@@ -89,7 +88,7 @@ blueprint frames. Drop images into `assets/img/` and replace the placeholder:
 
 <!-- after -->
 <figure class="shot marks">
-  <img src="assets/img/pier-install-pace.jpg" alt="Helical pier bracket installed at a settled footing in Pace, FL">
+  <img src="assets/img/pier-install-daphne.jpg" alt="Helical pier bracket installed at a settled footing in Daphne, AL">
 </figure>
 ```
 
@@ -108,10 +107,28 @@ accessibility and search.
 | `helical-piers.html` | Pier systems, torque verification, documentation |
 | `crawlspace-encapsulation.html` | Vapor barrier, sealed vents, humidity control |
 | `crawlspace-drainage.html` | Interior drains, sump systems, grading |
-| `crawlspace-stabilization.html` | Adjustable steel floor supports, framing repair |
+| `crawlspace-stabilization.html` | Sagging and bouncy floors, and their symptoms |
 | `concrete-lifting.html` | Polyurethane injection for driveways, patios, pool decks |
-| `service-areas.html` | Escambia, Santa Rosa and Okaloosa (FL) plus Baldwin County (AL) coverage |
+| `service-areas.html` | Mobile and Baldwin County (AL) coverage |
 | `contact.html` | Free inspection request form |
+
+## Content rules from the owner
+
+These came out of the owner's review of the copy. Keep them when editing pages:
+
+- **Get the inspection, don't teach the repair.** No step-by-step methods,
+  materials lists or DIY advice (downspouts, regrading, jacks). Symptom lists stay
+  as plain lists; how it gets fixed is discussed on site.
+- **No fixed-price promise.** Pier depth is not known until installation, so the
+  site offers a written plan and a written price, not a fixed one.
+- **No expected pier depths** in a written plan — only the general Gulf Coast
+  range in the helical FAQ.
+- **Pier records stay in-house.** Customers get the warranty at closeout, not
+  the installation logs. Detailed reports are for commercial jobs only.
+- **Leave insurance out.** No plumbing-leak causes and no claim paperwork.
+- **Crawlspace lifts are done in one visit**, not raised gradually over weeks.
+- **Service area is Mobile and Baldwin counties, Alabama.** Say "Gulf Coast"
+  rather than Pensacola or the Panhandle.
 
 ## Structure
 
