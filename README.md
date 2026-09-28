@@ -1,7 +1,7 @@
 # American Foundations & Crawlspaces
 
 Marketing site for American Foundations & Crawlspaces — foundation repair,
-crawlspace and concrete services in Mobile and Baldwin counties, Alabama.
+crawlspace and drainage services in Mobile and Baldwin counties, Alabama.
 
 Static HTML, CSS and vanilla JavaScript. **No build step, no dependencies, no
 npm install.** Open `index.html` in a browser, or drop the whole folder on any
@@ -108,7 +108,8 @@ accessibility and search.
 | `crawlspace-encapsulation.html` | Vapor barrier, sealed vents, humidity control |
 | `crawlspace-drainage.html` | Interior drains, sump systems, grading |
 | `crawlspace-stabilization.html` | Sagging and bouncy floors, and their symptoms |
-| `concrete-lifting.html` | Polyurethane injection for driveways, patios, pool decks |
+| `exterior-drainage.html` | French drains and exterior drainage for standing water in the yard |
+| `concrete-lifting.html` | Hidden for now (noindex, unlinked, not in sitemap) — concrete lifting paused |
 | `service-areas.html` | Mobile and Baldwin County (AL) coverage |
 | `contact.html` | Free inspection request form |
 
