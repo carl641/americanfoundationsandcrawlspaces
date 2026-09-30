@@ -106,6 +106,86 @@
     });
   });
 
+  /* -------------------------------------------------- Hero photo slider
+     Crossfades every 6s. Reduced-motion visitors start paused; the pause
+     button, a hidden tab and hover/focus all stop the rotation. */
+  var slider = document.querySelector("[data-slider]");
+  var controls = document.querySelector("[data-slider-controls]");
+  if (slider && controls) {
+    var slides = slider.querySelectorAll(".hero__slide");
+    var dotsWrap = controls.querySelector("[data-slider-dots]");
+    var caption = controls.querySelector("[data-slider-caption]");
+    var pauseBtn = controls.querySelector("[data-slider-pause]");
+    var current = 0;
+    var timer = null;
+    var userPaused = reduced;
+    var hovering = false;
+    var dots = [];
+
+    var show = function (n) {
+      current = (n + slides.length) % slides.length;
+      slides.forEach(function (s, i) {
+        s.classList.toggle("is-active", i === current);
+      });
+      dots.forEach(function (d, i) {
+        d.setAttribute("aria-current", String(i === current));
+      });
+      var cap = slides[current].querySelector("figcaption");
+      caption.textContent = cap ? cap.textContent : "";
+    };
+
+    var stop = function () {
+      clearInterval(timer);
+      timer = null;
+    };
+    var start = function () {
+      stop();
+      if (userPaused || hovering || document.hidden) return;
+      timer = setInterval(function () {
+        show(current + 1);
+      }, 6000);
+    };
+
+    slides.forEach(function (s, i) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.setAttribute("aria-label", "Show photo " + (i + 1) + " of " + slides.length);
+      b.addEventListener("click", function () {
+        show(i);
+        start();
+      });
+      dotsWrap.appendChild(b);
+      dots.push(b);
+    });
+
+    var syncPause = function () {
+      pauseBtn.setAttribute("aria-pressed", String(userPaused));
+      pauseBtn.setAttribute("aria-label", userPaused ? "Play slideshow" : "Pause slideshow");
+    };
+    pauseBtn.addEventListener("click", function () {
+      userPaused = !userPaused;
+      syncPause();
+      start();
+    });
+
+    controls.addEventListener("mouseenter", function () {
+      hovering = true;
+      stop();
+    });
+    controls.addEventListener("mouseleave", function () {
+      hovering = false;
+      start();
+    });
+    document.addEventListener("visibilitychange", start);
+
+    if (slides.length > 1) {
+      controls.hidden = false;
+      syncPause();
+      show(0);
+      start();
+    }
+  }
+
   /* --------------------------------------------------------- Footer year */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = String(new Date().getFullYear());
