@@ -1512,6 +1512,21 @@ a.tile:hover .tile__more {
   height: 100%;
   object-fit: cover;
 }
+.shots--spaced {
+  margin-top: 2.5rem;
+}
+.shot figcaption {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+  background: var(--paper);
+  padding: 0.5rem 0.75rem;
+}
 .shot span {
   font-family: var(--font-mono);
   font-size: 0.68rem;

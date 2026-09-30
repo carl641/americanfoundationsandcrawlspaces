@@ -77,24 +77,24 @@ only the business can make truthfully:
   pull real Google reviews or leave the section out
 - **Job photos** — see below
 
-### Adding job photos
+### Job photos (Uploadcare)
 
-`index.html` has three photo slots in the "Recent work" section, styled as
-blueprint frames. Drop images into `assets/img/` and replace the placeholder:
+Job photos are hosted in the Uploadcare project and referenced straight from
+its CDN (`https://4jc1ebxykm.ucarecd.net/<UUID>/...`) — nothing is stored in
+`assets/img/`. Each `<img>` uses Uploadcare URL operations so the originals
+(4–5 MB phone photos) are never sent to visitors:
 
-```html
-<!-- before -->
-<figure class="shot marks"><span>Photo slot &mdash; before / after</span></figure>
-
-<!-- after -->
-<figure class="shot marks">
-  <img src="assets/img/pier-install-daphne.jpg" alt="Helical pier bracket installed at a settled footing in Daphne, AL">
-</figure>
+```
+https://4jc1ebxykm.ucarecd.net/<UUID>/-/scale_crop/800x600/smart/-/format/auto/-/quality/smart/
 ```
 
-The `.shot` container is a fixed 4:3 box and images are `object-fit: cover`, so
-any reasonable size works. Write real alt text — it matters for both
-accessibility and search.
+`scale_crop` fits the 4:3 `.shot` frame, `format/auto` serves WebP/AVIF where
+supported, and a `srcset` offers 480/800/1200px widths. To swap a photo,
+upload it to Uploadcare and replace the UUID. Photos are currently used on
+`index.html` (Recent work), `crawlspace-encapsulation.html`,
+`crawlspace-stabilization.html` and `crawlspace-drainage.html`. Captions and
+alt text were written from the file names — check them against the actual
+photos.
 
 ---
 
