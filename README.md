@@ -4,14 +4,20 @@ Marketing site for American Foundations & Crawlspaces — foundation repair,
 crawlspace and drainage services in Mobile and Baldwin counties, Alabama.
 
 Static HTML, CSS and vanilla JavaScript. **No build step, no dependencies, no
-npm install.** Open `index.html` in a browser, or drop the whole folder on any
-host (Netlify, Cloudflare Pages, S3, cPanel, GitHub Pages — all fine as-is).
+npm install.** Drop the whole folder on any host.
 
-To preview locally:
+**Clean URLs:** pages are linked without `.html` (`/foundation-repair`, not
+`/foundation-repair.html`), and canonicals and the sitemap match. On Apache /
+cPanel the included `.htaccess` serves `page.html` at `/page`, 301s old `.html`
+URLs to the clean version, and forces `https://www.`. Netlify, Cloudflare
+Pages and Vercel do clean URLs on their own.
+
+To preview locally (needs a server that does clean URLs — opening the files
+directly or `python3 -m http.server` will 404 on internal links):
 
 ```bash
-python3 -m http.server 8000
-# then open http://localhost:8000
+npx serve .
+# then open http://localhost:3000
 ```
 
 ---
@@ -135,6 +141,7 @@ These came out of the owner's review of the copy. Keep them when editing pages:
 
 ```
 ├── index.html + 8 other pages
+├── .htaccess             # Apache: clean URLs, .html → clean 301s, https + www
 ├── robots.txt
 ├── sitemap.xml
 └── assets/

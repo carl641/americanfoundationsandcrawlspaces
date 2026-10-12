@@ -1,0 +1,53 @@
+# American Foundations & Crawlspaces — Apache config
+# Clean URLs: /foundation-repair serves foundation-repair.html,
+# and old .html URLs 301 to the clean version.
+
+Options -Indexes -MultiViews
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Force HTTPS + www (canonical host)
+  RewriteCond %{HTTP_HOST} !^www\. [NC]
+  RewriteRule ^ https://www.americanfoundationsandcrawlspaces.com%{REQUEST_URI} [L,R=301,NE]
+
+  RewriteCond %{HTTPS} off
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
+  RewriteRule ^ https://www.americanfoundationsandcrawlspaces.com%{REQUEST_URI} [L,R=301,NE]
+
+  # /index.html (or /index) -> /
+  RewriteCond %{THE_REQUEST} \s/+index(\.html)?[\s?] [NC]
+  RewriteRule ^ / [L,R=301]
+
+  # /page.html -> /page (only for real browser requests, not internal rewrites)
+  RewriteCond %{THE_REQUEST} \s/+([^\s?]+)\.html[\s?] [NC]
+  RewriteRule ^ /%1 [L,R=301,NE]
+
+  # Trailing slash on a page -> no slash (/contact/ -> /contact)
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)/$ /$1 [L,R=301]
+
+  # Serve /page from page.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteCond %{DOCUMENT_ROOT}/$1.html -f
+  RewriteRule ^([^.]+)$ $1.html [L]
+</IfModule>
+
+# Caching
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 month"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType image/svg+xml "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
+
+# Compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript image/svg+xml application/xml text/plain
+</IfModule>
