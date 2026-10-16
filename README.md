@@ -31,7 +31,7 @@ also marked with an HTML comment at each occurrence.
 | What | Placeholder currently in the files | Where |
 |---|---|---|
 | **Phone number** | `(850) 555-0123` and `tel:+18505550123` | Every page: top bar, hero buttons, CTA bands, footer, mobile call bar, JSON-LD. Mobile and Baldwin numbers use the 251 area code |
-| **Email address** | `info@americanfoundationsandcrawlspaces.com` | Footer on every page, contact page, JSON-LD |
+| **Email address** | `project@americanfoundationsandcrawlspaces.com` | Footer on every page, contact page, JSON-LD |
 | **Office hours** | Mon–Fri 8:00am–5:00pm, Sat/Sun closed | `contact.html` |
 | **Form handler** | `<form>` has no `action` | `contact.html` |
 | **Domain** | `www.americanfoundationsandcrawlspaces.com` | `<link rel="canonical">`, `og:url`, `sitemap.xml`, `robots.txt`, JSON-LD |
