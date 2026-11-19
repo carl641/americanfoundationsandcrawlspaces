@@ -30,23 +30,11 @@ also marked with an HTML comment at each occurrence.
 
 | What | Placeholder currently in the files | Where |
 |---|---|---|
-| **Phone number** | `(850) 555-0123` and `tel:+18505550123` | Every page: top bar, hero buttons, CTA bands, footer, mobile call bar, JSON-LD. Mobile and Baldwin numbers use the 251 area code |
 | **Email address** | `project@americanfoundationsandcrawlspaces.com` | Footer on every page, contact page, JSON-LD |
 | **Office hours** | Mon–Fri 8:00am–5:00pm, Sat/Sun closed | `contact.html` |
 | **Form handler** | `<form>` has no `action` | `contact.html` |
 | **Domain** | `www.americanfoundationsandcrawlspaces.com` | `<link rel="canonical">`, `og:url`, `sitemap.xml`, `robots.txt`, JSON-LD |
 | **Business address** | None — the old Pensacola address was removed | Add the real street address as a `PostalAddress` (plus `geo`) to the business JSON-LD in `index.html`, and to `provider` on each service page |
-
-`(850) 555-0123` is deliberately in the 555-01XX range reserved for fictional
-use, so it cannot ring a real person by accident. Replace it everywhere:
-
-```bash
-# from the repo root — check first, then run
-grep -rn "5550123\|555-0123" --include="*.html" .
-
-grep -rl "5550123\|555-0123" --include="*.html" . \
-  | xargs sed -i 's/(850) 555-0123/(251) XXX-XXXX/g; s/+18505550123/+1251XXXXXXX/g; s/+1-850-555-0123/+1-251-XXX-XXXX/g'
-```
 
 ### Connecting the contact form
 
